@@ -1,0 +1,85 @@
+{
+  "name": "vscode-image-editor",
+  "displayName": "Image Studio & Editor for VS Code",
+  "description": "Edita, recorta, rota y transforma imágenes directamente en Visual Studio Code.",
+  "version": "1.0.0",
+  "publisher": "tu-usuario",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other",
+    "Visualization",
+    "Formatters"
+  ],
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onCustomEditor:imageStudio.editor",
+    "onView:imageStudio.sidebar"
+  ],
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "imageStudio-container",
+          "title": "Image Studio",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "imageStudio-container": [
+        {
+          "type": "webview",
+          "id": "imageStudio.sidebar",
+          "name": "Editor Rápido de Imágenes",
+          "contextualTitle": "Image Studio"
+        }
+      ]
+    },
+    "customEditors": [
+      {
+        "viewType": "imageStudio.editor",
+        "displayName": "Image Studio Editor",
+        "selector": [
+          {
+            "filenamePattern": "*.{png,jpg,jpeg,webp,gif,svg}"
+          }
+        ],
+        "priority": "option"
+      }
+    ],
+    "commands": [
+      {
+        "command": "imageStudio.openActiveFile",
+        "title": "Image Studio: Abrir imagen actual en el editor",
+        "category": "Image Studio"
+      },
+      {
+        "command": "imageStudio.createNewCanvas",
+        "title": "Image Studio: Crear lienzo nuevo en blanco",
+        "category": "Image Studio"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "imageStudio.openActiveFile",
+          "when": "resourceExtname =~ /\\.(png|jpg|jpeg|webp|gif|svg)$/i",
+          "group": "7_modification"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^20.x",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.3.3"
+  }
+}
